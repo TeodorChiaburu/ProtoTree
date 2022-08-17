@@ -26,9 +26,9 @@ def get_data(args: argparse.Namespace):
     if args.dataset == 'CARS':
         return get_cars(True, './data/cars/dataset/train', './data/cars/dataset/train', './data/cars/dataset/test')
     if args.dataset == 'Wildbees':
-        return get_bees(False, '../../data/data_lstudio/Bees_Christian_bbox_train_aug',
-                               '../../data/data_lstudio/Bees_Christian_bbox_train',
-                               '../../data/data_lstudio/Bees_Christian_bbox_val')
+        return get_bees(False, '../../data/data_lstudio/Bees_bbox',
+                               '../../data/data_lstudio/Bees_bbox',
+                               '../../data/data_lstudio/Bees_Christian_bbox')
     raise Exception(f'Could not load data set "{args.dataset}"!')
 
 def get_dataloaders(args: argparse.Namespace):

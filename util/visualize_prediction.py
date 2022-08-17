@@ -142,6 +142,10 @@ def gen_pred_vis(tree: ProtoTree,
     # Create a node for the sample image
     s += f'sample[image="{sample_path}"];\n'
 
+    # Set decision threshold on linear or log scale depending on whether log probs.
+    # were also used during training
+    thresh = torch.log(torch.tensor(0.5)) if args.log_probabilities else 0.5
+
     # Create nodes for all decisions/branches
     # Starting from the leaf
     for i, node in enumerate(decision_path[:-1]):
@@ -149,7 +153,7 @@ def gen_pred_vis(tree: ProtoTree,
         prob = probs[node_ix].item()
         
         s += f'node_{i+1}[image="{upsample_path}/{node_ix}_nearest_patch_of_image.png" group="{"g"+str(i)}"];\n' 
-        if prob > 0.5:
+        if prob > thresh:
             s += f'node_{i+1}_original[image="{local_upsample_path}/{node_ix}_bounding_box_nearest_patch_of_image.png" imagescale=width group="{"g"+str(i)}"];\n'  
             label = "Present      \nSimilarity %.4f                   "%prob
             s += f'node_{i+1}->node_{i+1}_original [label="{label}" fontsize=10 fontname=Helvetica];\n'

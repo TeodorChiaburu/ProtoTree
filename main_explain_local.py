@@ -45,6 +45,10 @@ def get_local_expl_args() -> argparse.Namespace:
                         type=float,
                         default=0.98,
                         help='Threshold (between 0 and 1) for visualizing the nearest patch of an image after upsampling. The higher this threshold, the larger the patches.')
+    parser.add_argument('--log_probabilities',
+                        action='store_true',
+                        help='Only set if same argument was also used for training.'
+                        )
     args = parser.parse_args()
     return args
 
